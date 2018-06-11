@@ -1,10 +1,10 @@
 #!/bin/bash
 
-APIKEY="your api key here"
+APIKEY="you-api-key-here"
 trap onexit INT
 
 function getExistingStatus() {
-    if [ ! -f status_emoji.txt ] && [ ! -f status_text.txt ]; then
+    if [ ! -f status_text.txt ] || [ test `find "status_test.txt" -mmin +5` ]; then
         CURRENTPROFILE=$(curl -s "https://slack.com/api/users.profile.get?token="$APIKEY)
         STATUSEMOJI=$(php -r '$result = json_decode($argv[1], true); echo $result["profile"][$argv[2]];' "$CURRENTPROFILE" status_emoji)
 
